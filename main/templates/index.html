@@ -1,0 +1,464 @@
+{% extends "base.html" %}
+{% load static %}
+
+{%block main_a%}
+active
+{%endblock%}
+
+{%block styles%}
+    <style>
+        .content{
+            padding: 0;
+        }
+    </style>    
+    <script src="{%static 'js/table.js'%}"></script>
+    
+{%endblock%}
+
+{%block main%}
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                alertify.success("{{message}}");
+            </script>
+        {% endfor %}
+    {%endif%}
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormstudents" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}
+                    
+                    <label for="groups"  style="margin-top: 10px;">Группа</label>    
+                    <select id="groups" name="group" class="form-control">
+                        {%for group in groups%}
+                            <option value="{{group.id}}">{{group.name}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="roles" style="margin-top: 10px;">Роль</label>    
+                    <select name="role" id="roles" class="form-control">
+                        {%for role in roles%}
+                            <option value="{{role.id}}">{{role.ru_name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormworkers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+
+                    <label for="roles" style="margin-top: 10px;">Роль</label>    
+                    <select name="role" id="roles" class="form-control">
+                        {%for role in roles%}
+                            <option value="{{role.id}}">{{role.ru_name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormbooks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormlogs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}
+                    
+                    <label for="students"  style="margin-top: 10px;">Студент</label>    
+                    <select id="students" name="student" class="form-control">
+                        {%for student in students%}
+                            <option value="{{student.id}}">{{student.user.fullname}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="workers" style="margin-top: 10px;">Работник</label>    
+                    <select name="worker" id="workers" class="form-control">
+                        {%for worker in workers%}
+                            <option value="{{worker.id}}">{{worker.user.fullname}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="books" style="margin-top: 10px;">Книга</label>    
+                    <select name="book" id="books" class="form-control">
+                        {%for book in books%}
+                            <option value="{{book.id}}">{{book.name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormgroups" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:index'%}" class="modal fade" id="addFormroles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">{{menu_item}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <form method="POST" action="{%url 'main:student_edit'%}" class="modal fade" id="editFormstudents" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}
+                    
+                    <label for="groups"  style="margin-top: 10px;">Группа</label>    
+                    <select id="groups" name="group" class="form-control">
+                        {%for group in groups%}
+                            <option value="{{group.id}}">{{group.name}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="roles" style="margin-top: 10px;">Роль</label>    
+                    <select name="role" id="roles" class="form-control">
+                        {%for role in roles%}
+                            <option value="{{role.id}}">{{role.ru_name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="POST" action="{%url 'main:worker_edit'%}" class="modal fade" id="editFormworkers" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+
+                    <label for="roles" style="margin-top: 10px;">Роль</label>    
+                    <select name="role" id="roles" class="form-control">
+                        {%for role in roles%}
+                            <option value="{{role.id}}">{{role.ru_name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:book_edit'%}" class="modal fade" id="editFormbooks" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:log_edit'%}" class="modal fade" id="editFormlogs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}
+                    
+                    <label for="students"  style="margin-top: 10px;">Студент</label>    
+                    <select id="students" name="student" class="form-control">
+                        {%for student in students%}
+                            <option value="{{student.id}}">{{student.user.fullname}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="workers" style="margin-top: 10px;">Работник</label>    
+                    <select name="worker" id="workers" class="form-control">
+                        {%for worker in workers%}
+                            <option value="{{worker.id}}">{{worker.user.fullname}}</option>
+                        {%endfor%}
+                    </select>
+
+                    <label for="books" style="margin-top: 10px;">Книга</label>    
+                    <select name="book" id="books" class="form-control">
+                        {%for book in books%}
+                            <option value="{{book.id}}">{{book.name}}</option>
+                        {%endfor%}
+                    </select>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:group_edit'%}" class="modal fade" id="editFormgroups" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <form method="POST" action="{%url 'main:role_edit'%}" class="modal fade" id="editFormroles" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">{%csrf_token%}
+        <input type="hidden" name="menu_item" value="{{menu_item}}">
+        <input type="hidden" name="id" id="object_id" value="">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    {%for field in fields_for_create%}                        
+                        <label for="{{field}}" style="margin-top: 10px;">{{field}}</label>    
+                        <input type="text" name="{{field}}" id="{{field}}" class="form-control">                        
+                    {%endfor%}                                        
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </form>
+    
+
+    <div class="menu-header">
+        
+        <a href="{%url 'main:index'%}" class='menu-item {% if menu_item == "students"%}active{%endif%}'>Студенты</a>
+    
+        <a href="{%url 'main:workers'%}" class='menu-item {% if menu_item == "workers"%}active{%endif%}'>Работники</a>    
+    
+        <a href="{%url 'main:books'%}" class='menu-item {% if menu_item == "books"%}active{%endif%}'>Книги</a>
+    
+        <a href="{%url 'main:logs'%}" class='menu-item {% if menu_item == "logs"%}active{%endif%}'>Операции</a>    
+    
+        <a href="{%url 'main:groups'%}" class='menu-item {% if menu_item == "groups"%}active{%endif%}'>Группы</a>    
+    
+        <a href="{%url 'main:roles'%}" class='menu-item {% if menu_item == "roles"%}active{%endif%}'>Роли</a>
+        
+    </div>
+    <div class="container">
+        <div class="crud-header">
+            <form class="search-block" method="GET" action="">
+                <button type="submit" class="icon">
+                    <svg style="margin: auto;" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                </button>
+                <input type="text" class="search-input" placeholder="Поиск..." value="{{qs}}" name="qs">
+                <input type="hidden" name="menu_item" value="{{menu_item}}">
+            </form>
+            <button type="button" class="btn btn-primary btn-success" data-toggle="modal" data-target="#addForm{{menu_item}}">
+                Добавить
+            </button>
+        </div>
+        
+        <div class="table">
+            <div class="table-header">
+                {%for field in fields%}
+                    <div class="header__item"><a id="{{field}}" class="filter__link" href="#">{{field}}</a></div>
+                {%endfor%}
+                <div style="width: 30px; height: 30px; margin-right:20px"><a class="filter__link" ></a></div>
+                <div style="width: 30px; height: 30px; margin-right:20px"><a class="filter__link" ></a></div>
+                <!-- <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Wins</a></div>
+                <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Draws</a></div>
+                <div class="header__item"><a id="losses" class="filter__link filter__link--number" href="#">Losses</a></div>
+                <div class="header__item"><a id="total" class="filter__link filter__link--number" href="#">Total</a></div> -->
+            </div>
+            <div class="table-content">	
+                {%for row in data%}
+                    <div class="table-row">		
+                        {%for value in row%}
+                            <div class="table-data">{{value|truncatechars:17}}</div>
+                        {%endfor%}
+                        <form action="{%url 'main:delete'%}" method="post" class="delete-form">{%csrf_token%}
+                            <input type="hidden" name="menu_item" value="{{menu_item}}">
+                            <input type="hidden" name="id" value="{{row.0}}">
+                            <button type="submit" class="delete-button"></button>
+                        </form>
+                        <button type="button" class="edit-button" id="edit_object_{{row.0}}" data-toggle="modal" data-target="#editForm{{menu_item}}"  onclick="changeEditForm(this, '{{menu_item}}');"></button>
+                    </div>
+                {%endfor%}
+            </div>	
+        </div>
+    </div>
+
+{%endblock%}

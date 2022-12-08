@@ -1,0 +1,32 @@
+{% extends "auth_base.html" %}
+
+{%block styles%}
+    <title>Login Page</title>
+{%endblock%}
+
+{%block form%}
+    <form class="login" autocomplete="off" id="form" method="POST" action="">{%csrf_token%}
+        <div class="go-to">
+            <a href="{%url 'main:register'%}" >
+                Нет аккаунта?
+            </a>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <span style="color:red"{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</span>
+            {% endfor %}
+        {%endif%}
+        <div class="login__field">
+            <i class="login__icon fa fa-user"></i>
+            <input type="text" class="login__input" name="login" placeholder="Login" value="" autocomplete="off">
+        </div>
+        <div class="login__field">
+            <i class="login__icon fa fa-lock"></i>
+            <input type="password" class="login__input" name="password" placeholder="Password" value="" autocomplete="new-password">
+        </div>
+        <button class="button login__submit">
+            <span class="button__text">Войти</span>
+            <i class="button__icon fa fa-chevron-right"></i>
+        </button>	
+    </form>
+{%endblock%}
