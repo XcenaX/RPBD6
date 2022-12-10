@@ -301,7 +301,7 @@ class LogsView(View):
     
     def post(self, request):
         when = post_or_none(request, "when")
-        when = datetime.datetime.strptime(when)
+        #when = datetime.datetime.strptime(when)
         log_type = post_or_none(request, "log_type")
         
         student_id = post_or_none(request, "student")
@@ -313,7 +313,7 @@ class LogsView(View):
         worker_id = post_or_none(request, "worker")
         worker = Worker.objects.get(id=worker_id)
                 
-        log = Log.objects.create(student=student, book=book, worker=worker, when=when, log_type=log_type)
+        log = Log.objects.create(student=student, book=book, worker=worker, when=datetime.datetime.now(), log_type=log_type)
         log.save()
 
         messages.success(message="Оперция успешно создана!", request=request)
