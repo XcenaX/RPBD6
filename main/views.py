@@ -219,7 +219,7 @@ class WorkersView(View):
         student.save()
 
         messages.success(message="Работник успешно создан!", request=request)
-        return redirect(reverse("main:index"))
+        return redirect(reverse("main:workers"))
 
 
 class BooksView(View):
@@ -262,7 +262,7 @@ class BooksView(View):
         book.save()
 
         messages.success(message="Книга успешно создана!", request=request)
-        return redirect(reverse("main:index"))
+        return redirect(reverse("main:books"))
 
 
 class LogsView(View):
@@ -317,7 +317,7 @@ class LogsView(View):
         log.save()
 
         messages.success(message="Оперция успешно создана!", request=request)
-        return redirect(reverse("main:index"))
+        return redirect(reverse("main:logs"))
 
 
 class GroupsView(View):
@@ -358,7 +358,7 @@ class GroupsView(View):
         group.save()
 
         messages.success(message="Группа успешно создана!", request=request)
-        return redirect(reverse("main:index"))
+        return redirect(reverse("main:groups"))
 
 
 class RolesView(View):
@@ -400,7 +400,7 @@ class RolesView(View):
         role.save()
 
         messages.success(message="Роль успешно создана!", request=request)
-        return redirect(reverse("main:index"))
+        return redirect(reverse("main:roles"))
 
 
 class DeleteView(View):    
@@ -441,6 +441,7 @@ class StudentEditView(View):
         student.user.password = password
         student.group = group
         student.user.role = role
+        student.user.save()
         student.save()
 
         messages.success(message="Студент успешно обновлен!", request=request)
